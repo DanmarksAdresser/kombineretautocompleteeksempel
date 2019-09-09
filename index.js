@@ -3,7 +3,7 @@ import autocomplete from 'autocomplete.js';
 import 'babel-polyfill';
 import 'whatwg-fetch';
 
-function initAutocomplete(input, url, selected) {
+function initAutocomplete(input, selected) {
 
   function search(url) {
     return async function search(query, callback) {
@@ -13,14 +13,14 @@ function initAutocomplete(input, url, selected) {
     }
   }
 
-  autocomplete(input, {hint: true}, [
+  autocomplete(input, {hint: true, openOnFocus: true}, [
     {
       source: search('https://dawa.aws.dk/stednavne2?undertype=by|bydel&autocomplete&per_side=5&q='),
       displayKey: 'betegnelse',
       templates: {
-        header: '<p>By og bydele</p>',
+        header: '<i>By og bydele</i>',
         suggestion: function(suggestion) {
-          return '<div>' + suggestion.betegnelse + '</div>';
+          return suggestion.betegnelse;
         }
       }
     },
@@ -28,9 +28,9 @@ function initAutocomplete(input, url, selected) {
       source: search('https://dawa.aws.dk/supplerendebynavne2?autocomplete&per_side=5&q='),
       displayKey: 'betegnelse',
       templates: {
-        header: '<p>Supplerende bynavne</p>',
+        header: '<i>Supplerende bynavne</i>',
         suggestion: function(suggestion) {
-          return '<div>' + suggestion.betegnelse + '</div>';
+          return suggestion.betegnelse;
         }
       }
     },
@@ -38,9 +38,9 @@ function initAutocomplete(input, url, selected) {
       source: search('https://dawa.aws.dk/postnumre?autocomplete&per_side=5&q='),
       displayKey: 'betegnelse',
       templates: {
-        header: '<p>Postnumre</p>',
+        header: '<i>Postnumre</i>',
         suggestion: function(suggestion) {
-          return '<div>' + suggestion.betegnelse + '</div>';
+          return suggestion.betegnelse;
         }
       }
     }
@@ -54,4 +54,4 @@ function selected(objekt) {
 	document.getElementById('label').textContent = 'Du valgte ' + objekt.betegnelse;
 }
 
-initAutocomplete('#input', 'https://dawa.aws.dk/jordstykker?autocomplete&q=', selected);
+initAutocomplete('#input', selected);
