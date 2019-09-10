@@ -15,6 +15,7 @@ function initAutocomplete(input, selected) {
 
   autocomplete(input, {hint: true, openOnFocus: true}, [
     {
+      name: 'Danske_Stednavne',
       source: search('https://dawa.aws.dk/stednavne2?undertype=by|bydel&autocomplete&per_side=5&q='),
       displayKey: 'betegnelse',
       templates: {
@@ -25,6 +26,7 @@ function initAutocomplete(input, selected) {
       }
     },
     {
+      name: 'Supplerende_bynavne',
       source: search('https://dawa.aws.dk/supplerendebynavne2?autocomplete&per_side=5&q='),
       displayKey: 'betegnelse',
       templates: {
@@ -35,6 +37,7 @@ function initAutocomplete(input, selected) {
       }
     },
     {
+      name: 'Postnumre',
       source: search('https://dawa.aws.dk/postnumre?autocomplete&per_side=5&q='),
       displayKey: 'betegnelse',
       templates: {
@@ -46,12 +49,12 @@ function initAutocomplete(input, selected) {
     }
   ]).on('autocomplete:selected', function(even, suggestion, dataset) {
     console.log(even + ', ' + suggestion + ', ' + dataset);
-    selected(suggestion);
+    selected(suggestion, dataset);
   });
 }
 
-function selected(objekt) {
-	document.getElementById('label').textContent = 'Du valgte ' + objekt.betegnelse;
+function selected(objekt, dataset) {
+	document.getElementById('label').textContent = 'Du valgte ' + objekt.betegnelse + ' fra ' + dataset;
 }
 
 initAutocomplete('#input', selected);
